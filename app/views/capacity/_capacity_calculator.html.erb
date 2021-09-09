@@ -1,0 +1,145 @@
+<div class="container col-12">
+  <h3 class="display-6 fw-bold text-dark-blue"><%= I18n.t("capacity_calculator.ingredient_calculator") %></h3>
+  <%= form_with url: calculate_capacity_path(@capacity), local: false, method: :get do |form| %>
+    <div class="card mb-4 mt-2">
+      <div class="card-body">
+        <div class="text-inline mb-2"><%= I18n.t("capacity_calculator.unit_convert") %>:</div>
+        <div class="form-check-inline">
+          <%= form.radio_button :label, :ml, class: "form-check-input purple" %>
+          <%= form.label :ml, :ml %>
+        </div>
+        <div class="form-check-inline">
+          <%= form.radio_button :label, :glass, class: "form-check-input" %>
+          <%= form.label :glass, :glass %>
+        </div>
+        <div class="form-check-inline">
+          <%= form.radio_button :label, :tablespoon, class: "form-check-input" %>
+          <%= form.label :tablespoon, :tablespoon %>
+        </div>
+        <div class="form-check-inline">
+          <%= form.radio_button :label, :teaspoon, class: "form-check-input" %>
+          <%= form.label :teaspoon, :teaspoon %>
+        </div>
+        <div class="form-check-inline">
+          <%= form.radio_button :label, :gram, class: "form-check-input" %>
+          <%= form.label :gram, :gram %>
+        </div>
+        <div class="text-inline mt-2 mb-2"><%= I18n.t("capacity_calculator.product") %>:</div>
+        <%= form.collection_select :product_id, Product.order(:name),:id,:name, {include_blank:  I18n.t("capacity_calculator.select_product")}, class: "form-select" %>
+        <div class="align-items-start mt-3">
+          <div class="row">
+            <div class="card col-md-6 p-0">
+              <div class="card-body">
+                <div class="card-header text-dark-blue">
+                  <h5><%= I18n.t("capacity_calculator.input") %></h5>
+                </div>
+                <div class="col-6">
+                  <div class="form-group mt-3">
+                    <%= form.number_field :input, class: "form-control", step: :any, min: 0, 'data-positive-number' => 'true' %>
+                  </div>
+                  <%= form.submit I18n.t("capacity_calculator.calculate"), class: "btn btn-purple mx-auto mt-4 mb-2", id: "capacity-submit" %>
+                </div>
+              </div>
+            </div>
+            <div class="card col-md-6 p-0">
+              <div class="card-body">
+                <div class="card-header text-dark-blue">
+                  <h5><%= I18n.t("capacity_calculator.usage") %></h5>
+                </div>
+                <div class="col-12 mt-3">
+                  <p>
+                    <%= I18n.t("capacity_calculator.calculator_info") %>
+                  </p>
+                  <p>
+                    <%= I18n.t("capacity_calculator.calculator_usage") %>
+                  </p>
+                  <ul>
+                    <li>
+                      1 <%= I18n.t("capacity_calculator.glass") %> = 250 <%= I18n.t("capacity_calculator.ml") %>
+                    </li>
+                    <li>
+                      1 <%= I18n.t("capacity_calculator.tablespoon") %> = 15 <%= I18n.t("capacity_calculator.ml") %>
+                    </li>
+                    <li>
+                      1 <%= I18n.t("capacity_calculator.teaspoon") %> = 5 <%= I18n.t("capacity_calculator.ml") %>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3", id="results"></div>
+      </div>
+    </div>
+  <% end %>
+  <h3 class="display-6 fw-bold text-dark-blue"><%= I18n.t("capacity_calculator.form_calculator") %> </h3>
+  <%= form_with url: calculate_form_path(@form), local: false, method: :get do |form| %>
+    <div class="row align-items-start mt-2">
+      <div class="card col-md-6 p-0">
+        <div class="card-body">
+          <div class="text-inline mb-2"><%= I18n.t("capacity_calculator.in_recipe") %>:</div>
+          <div class="form-check-inline">
+            <%= form.radio_button :recipe_form, "mold", class: "form-check-input", onClick: "showRecipe();" %>
+            <%= form.label :mold, I18n.t("capacity_calculator.mold") %>
+          </div>
+          <div class="form-check-inline">
+            <%= form.radio_button :recipe_form, "caketin", class: "form-check-input", onClick: "hideRecipe();" %>
+            <%= form.label :caketin, I18n.t("capacity_calculator.cake_tin") %>
+          </div>
+          <div class="row align-items-start mt-3">
+            <div class="col-4">
+              <div class="mb-3">
+                <div class="form-group">
+                  <%= form.number_field :recipe_form_x, label: false, class: "form-control", min: 0, 'data-positive-number' => 'true' %>
+                </div>
+              </div>
+            </div>
+            <div class="col-1 hide-recipe"> X </div>
+            <div class="col-4 hide-recipe">
+              <div class="mb-3">
+                <div class="form-group">
+                  <%= form.number_field :recipe_form_y, label: false, class: "form-control", min: 0, 'data-positive-number' => 'true' %>
+                </div>
+              </div>
+            </div>
+            <div class="col-2 hide-recipe"><%= I18n.t("capacity_calculator.cm") %></div>
+          </div>
+        </div>
+      </div>
+      <div class="card col-md-6 p-0">
+        <div class="card-body">
+          <div class="text-inline mb-2"><%= I18n.t("capacity_calculator.i_have") %>:</div>
+          <div class="form-check-inline">
+            <%= form.radio_button :home_form, "mold", class: "form-check-input", onClick: "showHome();" %>
+            <%= form.label :mold, I18n.t("capacity_calculator.mold") %>
+          </div>
+          <div class="form-check-inline">
+            <%= form.radio_button :home_form, "caketin", class: "form-check-input", onClick: "hideHome();" %>
+            <%= form.label :caketin, I18n.t("capacity_calculator.cake_tin") %>
+          </div>
+          <div class="row align-items-start mt-3">
+            <div class="col-4">
+              <div class="mb-3">
+                <div class="form-group">
+                  <%= form.number_field :home_form_x, label: false, class: "form-control", min: 0, 'data-positive-number' => 'true' %>
+                </div>
+              </div>
+            </div>
+            <div class="col-1 hide-home"> X </div>
+            <div class="col-4 hide-home">
+              <div class="mb-3">
+                <div class="form-group">
+                  <%= form.number_field :home_form_y, label: false, class: "form-control", min: 0, 'data-positive-number' => 'true' %>
+                </div>
+              </div>
+            </div>
+            <div class="col-2 hide-home"> <%= I18n.t("capacity_calculator.cm") %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= form.submit I18n.t("capacity_calculator.calculate"), class: "btn btn-purple mx-auto mt-4 mb-4 calculator", id: "form-submit" %>
+  <% end %>
+  <div id="form-results"></div>
+</div>

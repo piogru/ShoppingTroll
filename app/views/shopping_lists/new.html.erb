@@ -1,0 +1,11 @@
+<div class="container pt-5">
+  <div class="text-center col-md-6 mx-auto">
+    <h3 class="text-dark-blue">
+      <%= t('shopping_lists.new') %>
+    </h3>
+    <%= form_for(@shopping_list) do |f| %>
+      <%= f.text_field :name, class: "form-control mb-2", placeholder: t('shopping_lists.new_placeholder') %>
+      <%= f.submit t('shopping_lists.create') , class: "btn btn-purple btn-sm px-3" %>
+    <% end %>
+  </div>
+</div>

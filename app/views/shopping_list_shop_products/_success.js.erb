@@ -1,0 +1,7 @@
+(() => {
+  document.querySelector('#remote-messages').innerHTML = '<%= j render 'shared/messages' %>'
+  const modalEl = document.querySelector('#modal-window')
+  const modal = bootstrap.Modal.getInstance(modalEl)
+  modal.hide()
+})();
+

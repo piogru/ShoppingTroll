@@ -1,0 +1,13 @@
+<div class="rating-control <%= classes %>">
+  <% (1..max_stars).each do |i| %>
+    <label>
+      <%= f.radio_button name, i, class: 'rating-button', required: required %>
+      <% i.times do %>
+        <i class="rating-icon bi bi-star-fill"></i>
+      <% end %>
+    </label>
+  <% end %>
+  <% max_stars.times do %>
+    <i class="rating-icon-empty bi bi-star"></i>
+  <% end %>
+</div>

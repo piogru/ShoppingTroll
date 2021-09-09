@@ -1,0 +1,12 @@
+<% categories.each do |category| %>
+  <div class="col-12 bg-white rounded p-4 mb-3 d-flex justify-content-between">
+    <div class="d-flex align-items-center">
+      <span class="fw-bold px-2 capitalize-first">
+        <%= category.name %>
+      </span>
+    </div>
+    <div>
+      <%= link_to t('categories.show_products'), category, class:"btn btn-purple mx-auto" %>
+    </div>
+  </div>
+<% end %>

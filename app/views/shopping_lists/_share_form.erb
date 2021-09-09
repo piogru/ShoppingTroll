@@ -1,0 +1,19 @@
+<div class="modal fade pt-5" id="inviteModal" aria-labelledby="inviteModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5> <%= t('shopping_lists.share_text') %> </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: share_shopping_list_path(@shopping_list), class: "d-flex flex-column" do |form| %>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <%= form.text_field :email, class: "form-control", placeholder: "Email" %>
+          </div>
+          <%= form.submit t('shopping_lists.share'), class: "align-self-center btn btn-purple btn-sm px-3 col-6" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

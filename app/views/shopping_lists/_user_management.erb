@@ -1,0 +1,27 @@
+<div class="modal fade pt-5" id="usersModal" aria-labelledby="usersModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5> <%= t('shopping_lists.user_management') %> </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% if @shopping_list.users.any? %>
+          <% @shopping_list.users.each do |user| %>
+            <div class="d-flex flex-row justify-content-between">
+              <%= user.email %>
+              <%= link_to remove_user_shopping_list_path(@shopping_list , user_id: user.id), method: :delete, class: "text-danger text-decoration-none" do %>
+                <span><%= t('shopping_lists.remove_user') %></span>
+                <i class="bi bi-person-x-fill"></i>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <p>
+            <%= t('shopping_lists.no_users') %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

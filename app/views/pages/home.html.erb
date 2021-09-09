@@ -1,0 +1,8 @@
+<div>
+  <% if @shopping_lists.any? %>
+    <%= render 'shared/shopping_lists_list' %>
+  <% else %>
+    <%= render 'no_lists' %>
+  <% end %>
+  <%== pagy_bootstrap_nav(@pagy_sl) if @pagy_sl.pages > 1 %>
+</div>

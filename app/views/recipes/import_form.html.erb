@@ -1,0 +1,48 @@
+<h3 class="my-3"><%= t "recipe_import.title" %></h3>
+
+<%= form_with url: recipe_import_path, method: :post, local: true do |f| %>
+  <div class="row">
+    <div class="col-12">
+      <%= f.text_field :title, value: @default_title, placeholder: true, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-3">
+    <% @ingredients.each do |ingredient| %>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <%= ingredient[:name].titleize %>
+            <span class="badge bg-secondary">
+              <%= ingredient[:quantity] %>
+              <%= ingredient[:unit] %>
+            </span>
+          </div>
+          <div class="card-body">
+            <select name="products[]" class="form-control">
+              <% unless ingredient[:suggestions].empty? %>
+                <% ingredient[:suggestions].each do |suggestion| %>
+                  <option value="<%= suggestion[:shop_product].id %>:<%= suggestion[:quantity] %>">
+                    <%= suggestion[:shop_product].product.name %> |
+                    <%= suggestion[:shop_product].product.capacity %> <%= suggestion[:shop_product].product.label %> |
+                    <%= suggestion[:shop_product].shop.name %> |
+                    <%= number_to_currency suggestion[:shop_product].price, locale: :pl %>
+                    &times; <%= suggestion[:quantity] %>
+                  </option>
+                <% end %>
+              <% else %>
+                <option disabled selected><%= t "recipe_import.no_matches" %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-12">
+      <%= f.submit t("recipe_import.submit"), class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

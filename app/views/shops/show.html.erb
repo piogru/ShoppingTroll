@@ -1,0 +1,85 @@
+<div id="remote-messages"></div>
+<div class="page">
+  <div class="container pt-5">
+    <%= link_to t('shops.shops_return'), shops_path, class:"btn btn-purple px-5" %>
+    <h3 class="display-4 pt-5 text-dark-blue text-center">
+      <%= @shop.name %>
+    </h3>
+    <div class="h3 text-center">
+      <%= render 'shared/rating', stars: @shop.average_rating, out_of: 5 %>
+    </div>
+    <h4 class="display-6 pt-5 text-dark-blue pb-3 text-center"><%= I18n.t("shops.available_products") %></h4>
+    <div class="col-12 bg-white rounded">
+      <% if !@categories.empty? %>
+        <div class="d-flex flex-wrap justify-content-start">
+          <% @categories.each_with_index do |category, index| %>
+            <div class="col-6 p-4 bd-highlight mb-3">
+              <div class="accordion accordion-flush shadow-sm rounded">
+                <div class="accordion-item mb-2">
+                  <h2 class="accordion-header" id="flush-heading_<%= index %>">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapse_<%= index %>"
+                      aria-expanded="false"
+                      aria-controls="flush-collapse_<%= index %>"
+                    >
+                      <h4 class="text-dark-blue capitalize-first"><%= category.name %></h4>
+                    </button>
+                  </h2>
+                  <div id="flush-collapse_<%= index %>" class="accordion-collapse collapse" aria-labelledby="flush-heading_<%= index %>" >
+                    <div class="accordion-body">
+                      <% @shop.shop_products.each do |shop_product| %>
+                        <% if shop_product.product.categories.any? { |c| c.id == category.id } %>
+                          <div class="col-12 d-flex justify-content-between mb-2">
+                            <div class="d-flex align-items-center">
+                              <span class="capitalize-first">
+                                <%= link_to shop_product.product.name, shop_product.product %>
+                              </span>
+                              <span class="badge bg-light-green ms-2">
+                                <%= number_to_currency(shop_product.price, locale: :pl)  %>
+                              </span>
+                            </div>
+                            <%= link_to t("products.add_btn"), add_to_shopping_list_path(shop_product),
+                                class: "btn btn-purple btn-sm px-2", remote: true,
+                                "data-bs-toggle" => "modal", "data-bs-target" => "#modal-window" %>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="row">
+          <p class="text-center mb-3 mt-3">
+            <%= t("shops.no_product_msg") %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+    <%= render "shopping_list_shop_products/modal" %>
+    <div class="row mt-5">
+      <h3 class="mb-4">
+        <%= @shop.reviews.count %>
+        <%= Review.model_name.human(count: @shop.reviews.count) %>
+      </h3>
+      <% @shop.reviews.each do |review| %>
+        <% unless @edited_review == review %>
+          <div class="col-lg-6">
+            <%= render 'shops/review', review: review %>
+          </div>
+        <% end %>
+      <% end %>
+      <% unless @edited_review.nil? %>
+        <div class="col-lg-6">
+          <%= render 'shops/review_form', shop: @shop, review: @edited_review %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="row pt-5">
+  <div class="col-lg-6 d-flex flex-column justify-content-center text-center">
+    <h2 class="text-dark-blue mb-3">
+      <%= t('landing_page.message') %>
+    </h2>
+    <a class="mx-auto">
+      <button type="button" class="btn btn-purple btn-lg px-5">
+        <%= t('landing_page.more_info_btn') %>
+      </button>
+    </a>
+  </div>
+  <div class="col-lg-6 d-flex">
+    <%= image_pack_tag "landing-image.svg", class: "mx-auto pt-3 img-fluid" %>
+  </div>
+</div>
+<% content_for :head do %>
+  <style>
+    .wrapper {
+      background-image: url(<%= image_pack_tag 'landing-bg.png' %>);
+    }
+  </style>
+<% end %>

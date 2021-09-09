@@ -1,0 +1,47 @@
+<% content_for :head do %>
+  <%= javascript_pack_tag 'shopping_list', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
+<div id="remote-messages"></div>
+
+<div class="container pt-5">
+  <div class="text-center text-dark-blue">
+    <h1><%= @shopping_list.name %></h1>
+    <p id="item-count">
+      <%= render "item_count" %>
+    </p>
+  </div>
+  <% if policy(@shopping_list).manage? %>
+    <div class="d-flex justify-content-center">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#inviteModal">
+          <%= t('shopping_lists.invite') %>
+        </button>
+        <button type="button" class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#usersModal"><%= I18n.t('shopping_lists.manage') %></button>
+        <%= link_to t('shopping_lists.delete'), shopping_list_path(@shopping_list),
+            data: { confirm: t('shopping_lists.delete_confirm') }, method: :delete, class: "btn btn-purple" %>
+      </div>
+    </div>
+    <%= render 'share_form' %>
+    <%= render 'user_management' %>
+  <% end %>
+  <% if policy(@shopping_list).shared_access? %>
+    <div class="d-flex justify-content-center">
+      <div class="btn-group" role="group" aria-label="Shared management">
+        <%= link_to remove_self_shopping_list_path(@shopping_list),
+            method: :delete, class: "btn btn-purple", data: { confirm: t('shopping_lists.remove_self_confirm') } do %>
+          <i class="bi bi-box-arrow-left"></i>
+          <span><%= I18n.t('shopping_lists.leave') %></span>
+        <% end %>
+      </div>
+    </div>
+
+  <% end %>
+
+  <div class="my-3", id="shopping-list-items">
+    <%= render "product_list" %>
+  </div>
+
+  <%= render "shopping_list_shop_products/modal" %>
+
+</div>

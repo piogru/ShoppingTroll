@@ -1,0 +1,17 @@
+# EXAMPLE USAGE
+# Refer for explanation to following link:
+# https://github.com/evilmartians/lefthook/blob/master/docs/full_guide.md
+
+pre-push:
+  parallel: true
+  commands:
+    stylelint:
+      tags: frontend style
+      files: git diff --name-only main
+      glob: "*.js"
+      run: yarn stylelint {files}
+    rubocop:
+      tags: backend style
+      files: git diff --name-only main
+      glob: "*.rb"
+      run: bundle exec rubocop --force-exclusion {files}

@@ -1,0 +1,183 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+en:
+  are_you_sure: "Are you sure?"
+  rating: "%{stars} out of %{out_of}"
+
+  activerecord:
+    models:
+      review:
+        one: "Review"
+        other: "Reviews"
+
+  reviews:
+    create:
+      success: "Review created"
+      failure: "Could not create review"
+    update:
+      success: "Review updated"
+      failure: "Could not update review"
+    destroy:
+      success: "Review deleted"
+      failure: "Could not delete review"
+
+  landing_page:
+    message: "We offer modern solutions for making shopping easier"
+    more_info_btn: "Get started"
+
+  home:
+    missing_lists_msg: "You don't have any shopping lists"
+    shopping_lists: "Your shopping lists: "
+    new_list_btn: "Create new list"
+
+  products:
+    all: "All products:"
+    more_details_btn: "More info"
+    add_btn: "Add to list"
+    shops_with_products: "You can buy %{name} in:"
+
+  navbar:
+    home: "Home"
+    products: "Products"
+    admin_panel: "Admin panel"
+    sign_in: "Sign in"
+    sign_up: "Sign up"
+    sign_out: "Sign out"
+    edit_acc: "Edit account"
+    categories: "Categories"
+    shops: "Shops"
+    calculator: "Calculator"
+
+  categories:
+    all: "All categories:"
+    products_in_category: "All products in %{name}:"
+    show_products: "Show products"
+
+  shops:
+    title: "Shops"
+    details: "Details"
+    available_products: "Available products"
+    no_product_msg: "There are no products available in this shop"
+    no_shop_msg: "There are no shops available"
+    shops_return: "Return to shops"
+
+  categories:
+    all: "All categories:"
+    products_in_category: "All products in %{name}:"
+    show_products: "Show products"
+
+  shopping_lists:
+    create: "Create"
+    share: "Share"
+    new: "Create new list"
+    share_text: "Invite others to collaborate on that list:"
+    new_placeholder: "New list name"
+    created: "Shopping list created"
+    self_share: "is owner of the list"
+    already_shared: "is already on that list"
+    share_success: "Shopping list has been shared"
+    shared_with: "Shared with: %{users}"
+    form_title: Add product to shopping list
+    user_management: "Shopping list users:"
+    destroy_success: "Shopping list was successfully destroyed."
+    no_users: "There aren't any users on that list"
+    user_removed: "User successfully removed"
+    not_owner: "You don't have permissions to do that!"
+    remove_user_error: "Could not remove user"
+    delete_confirm: "Are you sure?"
+    remove_user: "Remove"
+    invite: "Invite"
+    manage: "Manage"
+    delete: "Delete"
+    total_price: "Total price:"
+    leave: "Leave"
+    remove_self_confirm: "Are you sure you want to leave this shopping list?"
+    remove_self_success: "Successfully left shopping list"
+    remove_self_error: "Could not leave shopping list"
+
+  shopping_list:
+    form_title: Add product to shopping list
+    edit_form_title: Edit product information
+    add_to_list: Add to shopping list
+    select_list: Select shopping list
+    amount: Amount
+    self: Shopping list
+    chosen_product: Chosen product
+    add_success: "Product successfully added to shopping list"
+    increase_success: "Product amount updated to %{new_amount}"
+    add_failure: "Could not add product to shopping list"
+    product_bought: "Product bought"
+    edit_success: "Product information edited successfully"
+    delete_success: "Product removed successfully"
+
+  capacity_calculator:
+    ingredient_calculator: "Ingredient calculator"
+    form_calculator: "Form calculator"
+    input: "Input"
+    usage: "Usage"
+    calculator_info: "Use this calculator to convert selected unit to: ml, glasses, tablespoons, teaspoons and grams."
+    calculator_usage: "Choose a product and unit, then input the value."
+    unit_convert: "Unit to convert"
+    product: "Product"
+    select_product: "Select product"
+    in_recipe: "In the recipe"
+    i_have: "I have"
+    calculate: "Calculate"
+
+    ml: "ml"
+    glass: "glass"
+    glasses: "glasses"
+    tablespoon: "tablespoon"
+    tablespoons: "tablespoons"
+    teaspoon: "teaspoon"
+    teaspoons: "teaspoons"
+    gram: "gram"
+    grams: "grams"
+    cm: "cm"
+    product_ratio: "Product ratio"
+    mold: "Mold"
+    cake_tin: "Cake tin"
+
+    form_dim_error: "Please input form dimensions"
+    form_type_error: "Please select form types"
+    capacity_value_error: "Please enter value to convert"
+    capacity_label_prod_error: "Please select label and product"
+
+  recipe_import:
+    title: "Import recipe"
+    no_matches: "No matches"
+    submit: "Save shopping list"
+    success: "Shopping list created successfully"
+    failure: "Could not create shopping list"
+
+  pundit:
+    not_authorized: "You are not authorized to perform this action."

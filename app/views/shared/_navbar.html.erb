@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+      aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <%= link_to 'Shopping Troll', root_path, class: "navbar-brand text-dark-blue" %>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to t('navbar.products'), products_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to t('navbar.categories'), categories_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to t('navbar.shops'), shops_path, class:"nav-link" %>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <a class="nav-link", id="calculator-link", role="button", data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><%= t('navbar.calculator') %></a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <% if user_signed_in? %>
+          <% if current_user.admin? %>
+            <li class="nav-item ms-1">
+              <%= link_to t('navbar.admin_panel'), "/admin", class: "nav-link"%>
+            </li>
+          <% end %>
+          <li class="nav-item">
+            <%= link_to t('shopping_lists.new'), new_shopping_list_path, class: "nav-link"%>
+          </li>
+          <li class="nav-item">
+            <%= link_to t('navbar.edit_acc'), edit_user_registration_path, class: "nav-link"%>
+          </li>
+          <li class="nav-item">
+            <%= button_to t('navbar.sign_out'), destroy_user_session_path, method: :delete, class: "btn btn-purple"%>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to t('navbar.sign_up'), new_user_registration_path, class: "nav-link mr-2" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to t('navbar.sign_in'), new_user_session_path, class: "btn btn-purple"%>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,29 @@
+<div class="page">
+  <div class="container pt-5">
+    <h3 class="display-4 pt-5 text-dark-blue pb-3 text-center"><%= I18n.t('shops.title') %></h3>
+    <% if @shops %>
+      <% @shops.each do |shop| %>
+        <div class="col-12 bg-white rounded p-4 mb-3 d-flex justify-content-between flex-column flex-md-row">
+          <div class="d-flex align-items-center flex-column flex-md-row">
+            <span class="fw-bold px-2">
+              <%= shop.name %>
+            </span>
+            <span class="mx-2">
+              <%= render 'shared/rating', stars: shop.average_rating, out_of: 5 %>
+            </span>
+          </div>
+          <div class="align-self-center">
+            <%= link_to I18n.t('shops.details'), shop, class:"btn btn-purple px-5" %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col-12 bg-white rounded p-4 row">
+        <p class="text-center mb-3 mt-3">
+          <%= I18n.t("shops.no_shop_msg") %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%== pagy_bootstrap_nav(@pagy_s) if @pagy_s.pages > 1 %>

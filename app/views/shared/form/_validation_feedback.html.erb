@@ -1,0 +1,5 @@
+<% if object.errors[name].any? %>
+  <div id="<%= name.to_s %>InvalidFeedback" class="invalid-feedback d-block">
+    <%= object.errors.full_messages_for(name).join(', ') %>
+  </div>
+<% end %>

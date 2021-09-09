@@ -1,0 +1,59 @@
+<% @shopping_list.shopping_list_shop_products_by_shop.
+  each do |(shop, shopping_list_shop_products)|
+%>
+  <div class="row g-2 mt-3">
+    <div class="col-12">
+      <h5 class="my-0"><%= shop.name %></h5>
+    </div>
+
+    <% shopping_list_shop_products.each do |product| %>
+      <div class="card mb-2">
+
+        <div class="card-body d-flex justify-content-between">
+          <div class="d-flex align-items-center">
+            <span class="text-muted me-1"><%= product.amount.to_i %>x</span>
+            <div class="product-name me-2 <% if product.bought %>bought<% end %>">
+              <%= product.shop_product.product.name %>
+            </div>
+            <span class="badge bg-light-green">
+              <%= number_to_currency( product.price , locale: :pl)  %>
+            </span>
+          </div>
+
+          <div>
+            <div class="float-end btn-group" role="group" aria-label="Item actions">
+              <div class="me-2">
+                <%= form_with(model: product, local: false) do |form| %>
+                  <%= form.check_box :bought, class:"checkbox-lg" %>
+                <% end %>
+              </div>
+              <div class="me-2">
+                <%= link_to "", edit_shopping_list_shop_product_path(product),
+                {remote: true, "data-bs-toggle" => "modal", "data-bs-target" => "#modal-window",
+                  class: "btn btn-sm btn-warning bi bi-pencil"} %>
+              </div>
+              <div>
+                <%= link_to "", shopping_list_shop_product_path(product),
+                    method: :delete, class: "btn btn-sm btn-danger bi bi-trash", remote: true,
+                    data: { confirm: "Are you sure?" } %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="d-flex bg-white rounded flex-column text-dark-blue my-5 p-3">
+  <h3 class="border-purple-bottom py-2">Summary</h3>
+  <div class="d-flex align-items-center">
+    <div class="pt-3">
+      <span>
+        <%= t('shopping_lists.total_price') %>
+        <%= number_to_currency(@shopping_list.total_price, locale: :pl) %>
+      </span>
+    </div>
+  </div>
+</div>

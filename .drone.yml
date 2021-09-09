@@ -1,0 +1,102 @@
+kind: pipeline
+name: shopping_troll_ci
+
+steps:
+  - name: restore-cache
+    image: drillster/drone-volume-cache
+    settings:
+      restore: true
+      mount:
+        - vendor/bundle
+        - vendor/yarn
+        - node_modules
+        - ~/.phantomjs
+    volumes:
+      - name: cache
+        path: /cache
+
+  - name: deps_ruby
+    image: ragnarson/ci-ruby:2.7.4-node12-chrome
+    depends_on: [ restore-cache ]
+    commands:
+      - bin/bundle check --path=vendor/bundle || bundle install --path=vendor/bundle
+    environment:
+      RAILS_ENV: test
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_WITHOUT: development
+
+  - name: deps_js
+    image: ragnarson/ci-ruby:2.7.4-node12-chrome
+    depends_on: [ restore-cache ]
+    commands:
+      - yarn install
+    environment:
+      YARN_CACHE_FOLDER: vendor/yarn
+
+  - name: database_setup
+    image: ragnarson/ci-ruby:2.7.4-node12-chrome
+    depends_on: [ deps_ruby, deps_js ]
+    commands:
+      - bin/bundle check --path=vendor/bundle
+      - cp config/drone.database.yml config/database.yml
+      - bin/rake db:create
+      - bin/rake db:schema:load
+    environment:
+      RAILS_ENV: test
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_WITHOUT: development
+
+  - name: tests_linters
+    image: ragnarson/ci-ruby:2.7.4-node12-chrome
+    depends_on: [ deps_ruby, deps_js ]
+    commands:
+      - bin/bundle check --path=vendor/bundle
+      - bin/bundle-audit check --update
+      - bin/rubocop --parallel
+    environment:
+      RAILS_ENV: test
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_WITHOUT: development
+
+  - name: tests_rspec
+    image: ragnarson/ci-ruby:2.7.4-node12-chrome
+    depends_on: [ database_setup ]
+    commands:
+      - cp .env.example .env
+      - bin/bundle check --path=vendor/bundle
+      - bin/rake spec SPEC_OPTS="--format documentation"
+    environment:
+      RAILS_ENV: test
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_WITHOUT: development
+      OPENSSL_CONF: /tmp/
+      RECIPE_API_URL: https://www.example.com/api/v1/recipes/
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    depends_on: [ tests_rspec ]
+    settings:
+      rebuild: true
+      mount:
+        - vendor/bundle
+        - vendor/yarn
+        - node_modules
+        - ~/.phantomjs
+    volumes:
+      - name: cache
+        path: /cache
+
+services:
+  - name: database
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  - name: cache
+    image: redis
+
+volumes:
+  - name: cache
+    host:
+      path: /tmp/cache

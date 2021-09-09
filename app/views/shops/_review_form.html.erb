@@ -1,0 +1,24 @@
+<%= form_for [shop, review], builder: ReviewFormBuilder, html: { class: 'card' } do |f| %>
+  <div class="card-body row g-3">
+    <div class="col-12">
+      <%= f.rating_field :stars, max_stars: 5, required: true, class: 'text-warning' %>
+    </div>
+    <div class="col-12">
+      <%= f.text_field :title,
+            class: 'form-control',
+            placeholder: true,
+            'aria-describedby': 'titleInvalidFeedback' %>
+      <%= f.validation_feedback :title %>
+    </div>
+    <div class="col-12">
+      <%= f.text_area :description,
+            class: 'form-control',
+            placeholder: true,
+            'aria-describedby': 'descriptionInvalidFeedback' %>
+      <%= f.validation_feedback :description %>
+    </div>
+    <div class="col-12">
+      <%= f.submit class: 'btn btn-purple' %>
+    </div>
+  </div>
+<% end %>

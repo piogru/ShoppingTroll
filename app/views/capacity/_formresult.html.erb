@@ -1,0 +1,7 @@
+<%= render 'shared/messages' %>
+
+<% if @product_ratio %>
+  <div class="card card-header results-block mb-4">
+    <div class="inline"><strong class="text-dark-blue"><%= t :product_ratio %>: </strong><%= @product_ratio %></div>
+  </div>
+<% end %>

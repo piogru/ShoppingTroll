@@ -1,0 +1,28 @@
+<div class="text-center">
+  <h3 class="pt-5 text-dark-blue pb-3">
+    <%= t('home.shopping_lists') %>
+  </h3>
+</div>
+<% @shopping_lists.each do |shopping_list| %>
+  <%= link_to shopping_list_path(shopping_list), class: "text-decoration-none" do %>
+    <div class="col-12 bg-white rounded p-4 mb-3 d-flex justify-content-between border">
+      <div class="d-flex align-items-center">
+        <span class="fw-bold px-2 text-dark-blue capitalize-first">
+          <%= shopping_list.name %>
+        </span>
+        <% if shopping_list.users.any? %>
+          <small class="px-2">
+            <i class="bi bi-people-fill">
+              <%= t('shopping_lists.shared_with', users: pluralize(shopping_list.users.count, 'user')) %>
+            </i>
+          </small>
+        <% end %>
+        <span class="align-right">
+          <%= shopping_list.shopping_list_shop_products.bought.count %>
+          /
+          <%= shopping_list.shopping_list_shop_products.count %>
+        </span>
+      </div>
+    </div>
+  <% end %>
+<% end %>

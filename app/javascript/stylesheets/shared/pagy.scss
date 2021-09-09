@@ -1,0 +1,14 @@
+$app-color:#6C63FF;
+.pagination{
+    justify-content: center;
+}
+.page-item.active .page-link {
+    background-color: $app-color;
+    border-color: $app-color;
+}
+.page-link{
+    color: $app-color
+}
+.page-link:hover{
+    color: $app-color
+}

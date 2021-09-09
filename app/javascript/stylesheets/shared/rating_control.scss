@@ -1,0 +1,40 @@
+.rating-control {
+  display: inline-block;
+  position: relative;
+  user-select: none;
+
+  label {
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .rating-button {
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+  }
+
+  .rating-icon {
+    color: transparent;
+  }
+
+  label:last-child {
+    position: static;
+  }
+
+  &:not(:hover) .rating-button:checked ~ .rating-icon,
+  .rating-button:hover ~ .rating-icon {
+    color: inherit;
+  }
+
+  @for $z from 1 through 10 {
+    label:nth-child(#{$z}) {
+      z-index: 10 - $z + 1;
+    }
+  }
+}

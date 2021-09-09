@@ -1,0 +1,11 @@
+<%= render 'shared/messages' %>
+
+<% if @capacity_result %>
+  <div class="card card-header results-block mt-2">
+    <div class="inline"><strong class="text-dark-blue"><%= t :ml %>: </strong><%= @capacity_result['ml'] %></div>
+    <div class="inline"><strong class="text-dark-blue"><%= t :glasses %>: </strong><%= @capacity_result['glasses'] %></div>
+    <div class="inline"><strong class="text-dark-blue"><%= t :tablespoons %>: </strong><%= @capacity_result['tablespoons'] %></div>
+    <div class="inline"><strong class="text-dark-blue"><%= t :teaspoons %>: </strong><%= @capacity_result['teaspoons'] %></div>
+    <div class="inline"><strong class="text-dark-blue"><%= t :grams %>: </strong><%= @capacity_result['grams'] %></div>
+  </div>
+<% end %>

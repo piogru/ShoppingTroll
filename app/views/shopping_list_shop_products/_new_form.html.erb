@@ -1,0 +1,41 @@
+<div class="container col-md-5 bg-white rounded p-4 mt-5">
+  <div class="text-center mx-auto">
+    <div class="modal-title display-6 text-dark-blue text-center mb-4" id="myModalLabel">
+      <%= t "shopping_list.form_title" %>
+    </div>
+    <%= form_for @shopping_list_shop_product, url: add_to_shopping_list_path(params[:id]), builder: ValidatedFormBuilder, remote: true do |form| %>
+      <div class="modal-body">
+        <% shop_product = ShopProduct.find(params[:id]) %>
+        <%= form.hidden_field :shop_product_id, value: params[:id] %>
+        <div class="text-dark-blue mb-2"><%= t "shopping_list.chosen_product" %>:</div>
+        <div class="mb-2">
+          <%= shop_product.product.name %>
+          <span class="badge bg-light-green ms-2 mb-2">
+            <%= number_to_currency(shop_product.price, locale: :pl) %>
+          </span>
+        </div>
+        <hr/>
+        <div class="mt-4 mb-4">
+          <%= form.label :bought, I18n.t("shopping_list.product_bought"), class: "form-check-label text-dark-blue" %>
+          <%= form.check_box :bought, class: "form-check-input ms-2" %>
+        </div>
+        <div class="col-5 mt-4 mb-4 mx-auto">
+          <%= form.collection_select :shopping_list_id, current_user.shopping_lists, :id, :name,
+          {include_blank:  I18n.t("shopping_list.select_list")}, 'aria-describedby': 'shopping_listInvalidFeedback',
+          class: "form-select" %>
+          <%= form.validation_feedback :shopping_list %>
+        </div>
+        <div class="col-5 mb-2 mx-auto">
+          <%= form.label :amount, I18n.t("shopping_list.amount"), class: "text-dark-blue mb-2" %>
+          <%= form.number_field :amount, step: 1, min: 0, class: "form-control",
+          'aria-describedby': 'amountInvalidFeedback' %>
+          <%= form.validation_feedback :amount %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <%= form.submit I18n.t("shopping_list.add_to_list"), class: "btn btn-purple px-5" %>
+      </div>
+    <% end %>
+  </div>
+</div>

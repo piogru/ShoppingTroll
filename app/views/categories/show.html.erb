@@ -1,0 +1,7 @@
+<h3 class="pt-5 text-dark-blue pb-3 text-center">
+  <%= t('categories.products_in_category', name: @category.name) %>
+</h3>
+
+<div class="col-12">
+  <%= render "shared/products_list", showDetails: true, products: @products %>
+</div>

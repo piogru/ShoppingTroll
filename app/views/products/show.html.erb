@@ -1,0 +1,25 @@
+<div id="remote-messages"></div>
+<div class="page">
+  <div class="container pt-5">
+    <h3 class="pt-5 text-dark-blue pb-3 text-center">
+      <%= t("products.shops_with_products", name: @product.name) %>
+    </h3>
+    <% @product.shop_products.each do |p| %>
+      <div class="col-12 bg-white rounded p-4 mb-3 d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <span class="fw-bold px-2">
+            <%= link_to p.shop.name, p.shop %>
+          </span>
+          <span class="badge bg-light-green">
+            <%= number_to_currency(p.price , locale: :pl)  %>
+          </span>
+        </div>
+        <div>
+          <%= link_to t("products.add_btn"), add_to_shopping_list_path(p), {:remote => true, "data-bs-toggle" => "modal", "data-bs-target" => "#modal-window", class: "btn btn-purple px-5"} %>
+        </div>
+      </div>
+    <% end %>
+    <%= render "shopping_list_shop_products/modal" %>
+  </div>
+</div>
+</div>

@@ -1,0 +1,25 @@
+<div class="card mb-3">
+  <div class="card-body">
+    <%= render 'shared/rating', stars: review.stars, out_of: 5 %>
+
+    <div class="btn-group float-end">
+      <% if current_user == review.user %>
+        <%= link_to '', edit_shop_review_path(review.shop, review),
+                    class: 'btn btn-sm btn-warning bi bi-pencil' %>
+      <% end %>
+
+      <% if current_user&.admin? || current_user == review.user %>
+        <%= link_to '', shop_review_path(review.shop, review),
+                    method: :delete,
+                    class: 'btn btn-sm btn-danger bi bi-trash',
+                    data: { confirm: t('are_you_sure') } %>
+      <% end %>
+    </div>
+
+    <h5 class="card-title mt-2"><%= review.title %></h5>
+    <p class="card-text"><%= review.description %></p>
+  </div>
+  <div class="card-footer">
+    <%= review.user.nickname %>
+  </div>
+</div>

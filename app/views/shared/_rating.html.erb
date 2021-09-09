@@ -1,0 +1,16 @@
+<div class="rating text-warning"
+     aria-label="<%= t 'rating', stars: stars.round(2), out_of: out_of %>"
+     title="<%= t 'rating', stars: stars.round(2), out_of: out_of %>"
+>
+  <% rating_stars(stars, out_of: out_of) do |full, half, empty| %>
+    <% full.times do %>
+      <i class="bi bi-star-fill"></i>
+    <% end %>
+    <% half.times do %>
+      <i class="bi bi-star-half"></i>
+    <% end %>
+    <% empty.times do %>
+      <i class="bi bi-star"></i>
+    <% end %>
+  <% end %>
+</div>
